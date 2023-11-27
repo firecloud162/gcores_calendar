@@ -1,6 +1,7 @@
 import requests
 import shutil
 from .config import AUDIOS_API, DJS_API, AVATAR_PNG_URL, AUDIO_INFO_URL
+import sys
 
 
 def get_audios_page_data(offset, limit, sort):
@@ -39,11 +40,14 @@ def get_avatar(thumb, djs_id, file_path):
             shutil.copy2(file_path + "avatar-default.png", file_path + djs_id + ".png")
             return True
         url = AVATAR_PNG_URL.format(thumb=thumb)
+        sys.stdout.write(f"{url}\n")
+        sys.stdout.write(f"{response.status_code}\n")
         response = requests.get(url)
         if response.status_code == 200:
             # change all to png
             with open(file_path + djs_id + ".png", "wb") as f:
-                f.write(response.content)
+                ret = f.write(response.content)
+                sys.stdout.write(f"{ret}\n")
         return True
     except:
         return False
