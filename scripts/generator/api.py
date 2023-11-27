@@ -41,8 +41,8 @@ def get_avatar(thumb, djs_id, file_path):
             return True
         url = AVATAR_PNG_URL.format(thumb=thumb)
         sys.stdout.write(f"{url}\n")
-        sys.stdout.write(f"{response.status_code}\n")
         response = requests.get(url)
+        sys.stdout.write(f"{response.status_code}\n")
         if response.status_code == 200:
             # change all to png
             with open(file_path + djs_id + ".png", "wb") as f:
